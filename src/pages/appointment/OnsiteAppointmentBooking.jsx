@@ -1,178 +1,228 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { CiLocationOn } from "react-icons/ci";
-import { Skeleton } from '@mui/material';
-import { FaRegMoneyBillAlt } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { Icon } from '@iconify/react';
 import { createAppointments } from '../../features/appointments/appointmentsSlice';
 import Navbar from '../../components/common/Navbar';
+import Footer from '../../components/common/Footer';
 import { message } from 'antd';
-import { useEffect } from 'react';
+
 const OnsiteAppointmentBooking = () => {
     const dispatch = useDispatch();
-    const { token, loggeduser } = useSelector(
-        (state) => state.userDetails
-    );
+    const navigate = useNavigate();
+    const { token, loggeduser } = useSelector((state) => state.userDetails);
     const { doctor } = useSelector(state => state.doctor.doctor);
-    const userToken = loggeduser.token
+    const { success, isLoading } = useSelector(state => state.appointments);
+
+    const userToken = loggeduser.token;
+
+    // Form State
     const [patientname, setPname] = useState('');
     const [patientemail, setEmail] = useState('');
     const [patientgender, setGender] = useState('');
     const [phone, setPhone] = useState('');
     const [date, setDate] = useState('');
     const [schedule, setSchedule] = useState('');
-    const doctortitle = doctor.title;
-    const doctorname = doctor.name;
-    const doctoremail = doctor.email;
-    const doctorfees = doctor.fees;
-    const doctorimage = doctor.avatar?.url;
-    const doctorId = doctor._id;
-    const doctordegree = doctor.degree;
-    const doctorwork = doctor.work;
-    const url = doctor.url
-    const data = ({ doctortitle, doctorname, doctoremail, doctorfees, doctorimage, doctorId, doctordegree, doctorwork, patientname, patientgender, phone, date, schedule, url ,patientemail});
-    const handleCreate = (e) => {
-        e.preventDefault();
-        if (patientname && phone && date && schedule) {
-            dispatch(createAppointments({
-                data, userToken
-            }));
+
+    useEffect(() => {
+        if (!token) {
+            navigate('/user/login');
         }
-    }
-    const { success } = useSelector(state => state.appointments);
+    }, [token, navigate]);
+
     useEffect(() => {
         if (success) {
-            message.success("Onsite Appointment Booked Successfully")
+            message.success("Onsite Appointment Booked Successfully");
+            // Optional: navigate away or clear form
         }
     }, [success]);
+
+    const handleCreate = (e) => {
+        e.preventDefault();
+
+        if (!patientname || !phone || !date || !schedule) {
+            message.error("Please fill in all required fields");
+            return;
+        }
+
+        const data = {
+            doctortitle: doctor.title,
+            doctorname: doctor.name,
+            doctoremail: doctor.email,
+            doctorfees: doctor.fees,
+            doctorimage: doctor.avatar?.url,
+            doctorId: doctor._id,
+            doctordegree: doctor.degree,
+            doctorwork: doctor.work,
+            patientname,
+            patientgender,
+            phone,
+            date,
+            schedule,
+            url: doctor.url,
+            patientemail
+        };
+
+        dispatch(createAppointments({ data, userToken }));
+    };
+
+    if (!doctor) {
+        return (
+            <div className="flex flex-col min-h-screen bg-slate-50">
+                <Navbar />
+                <div className="flex-grow flex items-center justify-center">
+                    <p className="text-slate-500">No doctor selected. Please go back.</p>
+                </div>
+            </div>
+        )
+    }
+
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-slate-50">
             <Navbar />
-            <div className="lg:flex justify-between gap-8 lg:w-11/12 mx-auto mt-16 lg:mt-48">
-                <div className='w-full'>
-                    <div className="lg:hidden w-full flex mt-4 border rounded-lg p-4">
-                        {
-                            doctor?.avatar?.url ? <img
-                                src={doctor?.avatar.url}
-                                className="h-24 w-24  lg:h-40 lg:w-40 border rounded-lg ml-5 "
-                                alt={doctor.name}
-                            /> : null
-                        }
-                        <div>
-                            <p className="ml-5 text-start font-semibold text-md lg:text-xl">{doctor?.title}{doctor?.name}</p>
-                            <p className="ml-5 text-start ">{doctor?.degree}</p>
-                            <p className="ml-5 text-start ">{doctor?.expert} | consultant</p>
-                            <p className="ml-5 text-start ">Consultation fees : {doctor?.fees}TK</p>
-                            <div className="lg:hidden flex ml-4 mt-3">
-                                <CiLocationOn className="text-xl"></CiLocationOn>
-                                <p className="text-start">{doctor?.work}</p>
-                            </div>
-                        </div>
+
+            <main className="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-4xl mx-auto">
+                    <div className="mb-8 text-center sm:text-left">
+                        <Link to={`/doctor/${doctor._id}`} className="inline-flex items-center text-sm font-medium text-slate-500 hover:text-primary-600 mb-4 transition">
+                            <Icon icon="solar:arrow-left-bold" className="mr-1" />
+                            Back to Profile
+                        </Link>
+                        <h1 className="text-3xl font-bold text-slate-900">Book In-Person Appointment</h1>
+                        <p className="text-slate-500 mt-2">Fill in your details to schedule a visit.</p>
                     </div>
 
+                    <div className="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden lg:grid lg:grid-cols-3">
+                        {/* Doctor Summary Sidebar */}
+                        <div className="bg-slate-50 p-8 border-b lg:border-b-0 lg:border-r border-slate-100 lg:col-span-1">
+                            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-6">Appointment With</h2>
 
-                    <Link to={`/doctor/${doctor._id}`} >
-                        <div className="hidden lg:flex justify-between  border border-inherit rounded">
-                            <div className="w-full flex md:flex lg:flex justify-between  mb-5 ">
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-24 h-24 rounded-2xl bg-white border border-slate-200 overflow-hidden mb-4 shadow-sm">
+                                    <img
+                                        src={doctor?.avatar?.url || 'https://placehold.co/200'}
+                                        alt={doctor.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <h3 className="font-bold text-slate-900 text-lg">{doctor.title} {doctor.name}</h3>
+                                <p className="text-primary-600 font-medium text-sm mt-1">{doctor.expert}</p>
+                                <p className="text-slate-500 text-sm mt-1 flex items-center gap-1">
+                                    <Icon icon="solar:hospital-bold" />
+                                    {doctor.work}
+                                </p>
+                            </div>
 
-                                {
-                                    doctor?.avatar?.url ? <img
-                                        src={doctor?.avatar.url || <Skeleton />}
-                                        className="w-48 h-24 m-3 ml-3 border rounded"
-                                        alt={doctor?.name}
-                                    /> : null
-                                }
-                                <div className=" w-full text-start ml-5 lg:ml-3 md:ml-3 ">
-                                    <div className="flex mt-3">
-                                        <p className="font-semibold"> {doctor?.name || <Skeleton />} </p>
-                                    </div>
-                                    <p className="text-slate-600  text-md " >
-                                        {doctor?.degree || <Skeleton />}
-                                    </p>
-                                    <p className="text-slate-400  text-md mt-3" >
-                                        Specialities
-                                    </p>
-                                    <p className=" text-md " >
-                                        {doctor?.expert || <Skeleton />}
-                                    </p>
-                                    <div className="mt-5">
-                                        <div className="ml-5 lg:ml-0 text-start mr-10 mt-5 mb-5 ">
-                                            <p className="text-slate-600  text-md font-semibold" >
-                                                Works at {doctor?.work || <Skeleton />}
-                                            </p>
-                                            <div className="flex justify-between lg:block">
-                                                <div>
-                                                    <p className="text-slate-400  text-md mt-3" >
-                                                        Experience
-                                                    </p>
-                                                    <p className=" text-md text-black" >
-                                                        {doctor?.experience || <Skeleton />} Years
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-slate-400  text-md mt-3" >
-                                                        Total Ratings
-                                                    </p>
-                                                    <p className=" text-md " >
-                                                        {/* {ratings} */}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p className="text-slate-600  text-md font-semibold flex gap-2 mt-2" >
-                                                < FaRegMoneyBillAlt className="text-2xl"></FaRegMoneyBillAlt>{doctor?.fees || <Skeleton />} BDT
-                                            </p>
-                                        </div>
-                                    </div>
+                            <div className="mt-8 space-y-4">
+                                <div className="bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center">
+                                    <span className="text-slate-500 text-sm font-medium">Consultation Fee</span>
+                                    <span className="text-slate-900 font-bold">{doctor.fees} BDT</span>
                                 </div>
                             </div>
                         </div>
-                    </Link>
-                </div>
-                <div className='w-full lg:w-3/4 border rounded mt-4 lg:mt-0'>
-                    {
-                        token ?
 
-                            <div className="w-full lg:w-3/4 mx-auto  mb-12 mt-5">
-                                <p className="text-start  mx-auto text-sm text-violet-300 ml-3  lg:text-xl">In-hospital Consultation</p>
-                                <form action="" className="p-3" onSubmit={handleCreate}>
-                                    <div className="">
-                                        <input type="text" value={patientname} onChange={(e) => setPname(e.target.value)} placeholder="Enter Patient Name" className="border border-gray-300 rounded mx-auto w-full p-2 h-12" />
+                        {/* Booking Form */}
+                        <div className="p-8 lg:col-span-2">
+                            <form onSubmit={handleCreate} className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Patient Name</label>
+                                    <input
+                                        type="text"
+                                        value={patientname}
+                                        onChange={(e) => setPname(e.target.value)}
+                                        placeholder="Full Name"
+                                        className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+                                        <input
+                                            type="tel"
+                                            value={phone}
+                                            onChange={(e) => setPhone(e.target.value)}
+                                            placeholder="01XXXXXXXXX"
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                        />
                                     </div>
                                     <div>
-                                        <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter Patient Phone " className="border border-gray-200 rounded w-full  p-2 h-12 mx-auto mt-5" />
-                                    </div>
-                                    <div className="mt-4 ">
-                                        <input type="text" value={patientemail} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email" className="border border-gray-300 rounded mx-auto w-full p-2 h-12" />
-                                    </div>
-                                    <div>
-                                        <select name="Gender" className="w-full  h-12 border rounded mt-5" value={patientgender} onChange={(e) => setGender(e.target.value)}>
-                                            <option  >Select Gender </option>
-                                            <option  >Male </option>
-                                            <option >Female </option>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Gender</label>
+                                        <select
+                                            value={patientgender}
+                                            onChange={(e) => setGender(e.target.value)}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                        >
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
+                                </div>
 
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Email (Optional)</label>
+                                    <input
+                                        type="email"
+                                        value={patientemail}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="email@example.com"
+                                        className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <select className="w-full  h-12 border rounded mt-5" value={schedule} onChange={(e) => setSchedule(e.target.value)}  >
-                                            <option  >Select Slots</option>
-                                            <option >Morning </option>
-                                            <option >Afternoon </option>
-                                            <option >Evening </option>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Preferred Date</label>
+                                        <input
+                                            type="date"
+                                            value={date}
+                                            onChange={(e) => setDate(e.target.value)}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-slate-700"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Time Slot</label>
+                                        <select
+                                            value={schedule}
+                                            onChange={(e) => setSchedule(e.target.value)}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                        >
+                                            <option value="">Select Slot</option>
+                                            <option value="Morning">Morning (09:00 - 12:00)</option>
+                                            <option value="Afternoon">Afternoon (02:00 - 05:00)</option>
+                                            <option value="Evening">Evening (06:00 - 09:00)</option>
                                         </select>
                                     </div>
-                                    <div>
-                                        <p className="text-start  mx-auto text-sm text-violet-300 mt-5">Select  Date?</p>
-                                        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} placeholder="Appoinment Date" className="border border-gray-200 rounded w-full  p-2 h-12 mx-auto  text-black" />
-                                    </div>
+                                </div>
 
-                                    <button className="btn btn-md bg-violet-500 hover:bg-violet-500 border-violet-500 hover:border-violet-500 mt-5 h-12  w-full text-white font-semibold text-center mb-5 ">Book Appointment </button>
-                                </form>
-                            </div>
-                            : null
-                    }
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="w-full py-4 mt-4 rounded-xl font-bold text-white bg-primary-600 hover:bg-primary-700 shadow-lg shadow-primary-500/30 transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                                >
+                                    {isLoading ? (
+                                        <>
+                                            <Icon icon="svg-spinners:ring-resize" />
+                                            Confirming...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Confirm Appointment
+                                            <Icon icon="solar:check-circle-bold" className="text-xl" />
+                                        </>
+                                    )}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </main>
+
+            <Footer />
         </div>
     );
 };
+
 export default OnsiteAppointmentBooking;

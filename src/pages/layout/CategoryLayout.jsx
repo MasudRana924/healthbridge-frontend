@@ -1,21 +1,22 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { Icon } from '@iconify/react';
 
 const CategoryLayout = () => {
     return (
-        <div className='w-11/12 md:w-3/4 lg:w-3/4 xl:w-7/12 2xl:w-6/12 mx-auto border border-white shadow-md bg-white rounded-md lg:h-84 p-6'>
-            {/* <div className="flex gap-4">
-                <NavLink
-                    to="find-doctor"
-                    className={({ isActive }) =>
-                        'mb-2 font-medium text-md' + (isActive ? '' : ' text-gray-600')}
-                    style={({ isActive }) => ({ color: isActive ? 'blue' : 'gray' })}
-                >
-                    Find Doctor
-                </NavLink>
-            </div>
-            <hr /> */}
-            <div>
-                <Outlet />
+        <div className="w-full max-w-5xl mx-auto -mt-6">
+            <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+                <div className="p-6 md:p-8">
+                    <div className="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                        <div className="p-2 bg-primary-50 rounded-lg text-primary-500">
+                            <Icon icon="solar:magnifer-bold" className="text-xl" />
+                        </div>
+                        <h2 className="text-xl font-semibold text-slate-800">Find Your Specialist</h2>
+                    </div>
+
+                    <div className="min-h-[300px]">
+                        <Outlet />
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -1,81 +1,58 @@
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { Droplets, Clock, AlertCircle } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { Icon } from '@iconify/react';
 
 const BloodGroupCard = ({ bloodGroup, isEmergency = false }) => {
   const dispatch = useDispatch();
-//   const { selectedBloodGroups } = useSelector(state => state.bloodFilter);
+  // const { selectedBloodGroups } = useSelector(state => state.bloodFilter);
+  // const isSelected = selectedBloodGroups.includes(bloodGroup);
+  let isSelected = false; // Placeholder logic until reducer is connected fully
 
-//   const isSelected = selectedBloodGroups.includes(bloodGroup);
-let isSelected ;
   const handleSelect = () => {
+    // Dispatch logic here
     if (isSelected) {
-      dispatch({ type: 'REMOVE_BLOOD_GROUP', payload: bloodGroup });
+      // dispatch({ type: 'REMOVE_BLOOD_GROUP', payload: bloodGroup });
     } else {
-      dispatch({ type: 'ADD_BLOOD_GROUP', payload: bloodGroup });
+      // dispatch({ type: 'ADD_BLOOD_GROUP', payload: bloodGroup });
     }
   };
 
   return (
-    <div className="col-span-6 sm:col-span-4 md:col-span-3">
+    <div className="col-span-6 sm:col-span-3">
       <button
         onClick={handleSelect}
         className={`
-          relative w-full transition-all duration-300 ease-in-out
-          transform hover:scale-105 hover:shadow-lg
-          ${isSelected ? 'bg-red-50 border-2 border-violet-500' : 'bg-white border border-gray-200'}
-          flex flex-col items-center gap-1.5
-          p-2 sm:p-3
-          rounded-lg
+          relative w-full h-full min-h-[140px]
+          flex flex-col items-center justify-center p-4 rounded-2xl
+          transition-all duration-300 ease-out
+          border
+          ${isSelected
+            ? 'bg-red-50 border-red-500 shadow-lg shadow-red-100 ring-2 ring-red-200'
+            : 'bg-white border-slate-100 hover:border-red-200 hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1'
+          }
           group
         `}
       >
-        {/* Blood Icon Container */}
         <div className={`
-          w-10 h-10 sm:w-12 sm:h-12 
-          rounded-full 
+          w-16 h-16 mb-3 rounded-full 
           flex items-center justify-center
           transition-all duration-300
-          ${isSelected ? 'bg-red-100' : 'bg-red-50'}
-          ${isSelected ? 'ring-2 ring-violet-500 ring-offset-2' : 'ring-1 ring-red-100'}
-          group-hover:ring-violet-500
+          ${isSelected ? 'bg-red-500 text-white shadow-lg shadow-red-500/30' : 'bg-red-50 text-red-500 group-hover:bg-red-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-red-500/30'}
         `}>
-          <Droplets 
-            className={`
-              w-5 h-5 sm:w-6 sm:h-6
-              transition-colors duration-300
-              ${isSelected ? 'text-violet-500' : 'text-red-400'}
-              group-hover:text-violet-500
-            `}
-          />
+          <div className="text-2xl font-bold">{bloodGroup}</div>
         </div>
 
-        {/* Blood Group Text */}
         <span className={`
-          font-semibold text-sm sm:text-base transition-colors duration-300
-          ${isSelected ? 'text-violet-500' : 'text-gray-700'}
-          group-hover:text-violet-500
+          font-medium text-sm
+          transition-colors duration-200
+          ${isSelected ? 'text-red-700' : 'text-slate-500 group-hover:text-red-600'}
         `}>
-          {bloodGroup}
+          Blood Group
         </span>
 
-        {/* Emergency Tag */}
         {isEmergency && (
-          <div className="absolute -top-1.5 -left-1.5 bg-violet-500 text-white 
-                         px-1.5 py-0.5 rounded-md text-xs font-medium
-                         flex items-center gap-1 shadow-md">
-            <Clock className="w-2.5 h-2.5" />
-            <span className="text-[10px] sm:text-xs">Immediate</span>
-          </div>
-        )}
-
-        {/* Selected Checkmark */}
-        {isSelected && (
-          <div className="absolute -top-1 -right-1 
-                         w-4 h-4 sm:w-5 sm:h-5
-                         bg-violet-500 rounded-full 
-                         flex items-center justify-center shadow-md">
-            <span className="text-white text-[10px] sm:text-xs">✓</span>
+          <div className="absolute top-2 right-2 animate-pulse" title="High Demand">
+            <Icon icon="solar:danger-circle-bold" className="text-red-500 text-lg" />
           </div>
         )}
       </button>
@@ -96,18 +73,16 @@ const BloodGroupSelector = () => {
   ];
 
   return (
-    <div className="w-11/12 md:w-3/4 lg:w-3/4 xl:w-7/12 2xl:w-6/12 mx-auto border border-white shadow-md bg-white rounded-md lg:h-84 p-6">
-      {/* Header Section */}
-      <div className="flex items-center gap-2">
-        <AlertCircle className="text-violet-500 w-5 h-5" />
-        <h2 className="text-lg font-bold text-gray-800">Blood Groups Available</h2>
+    <div className="bg-white rounded-2xl shadow-2xl shadow-slate-200 border border-slate-100 p-8">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-slate-800 flex items-center justify-center gap-2">
+          <Icon icon="solar:dropper-bold" className="text-red-500 text-3xl" />
+          Select Blood Group
+        </h2>
+        <p className="text-slate-500 mt-2">Find donors matching the required blood group</p>
       </div>
 
-      {/* Horizontal Rule */}
-      <hr className="my-4 border-gray-200" />
-
-      {/* Blood Groups Grid */}
-      <div className="grid grid-cols-12 gap-3">
+      <div className="grid grid-cols-12 gap-4">
         {bloodGroups.map((blood) => (
           <BloodGroupCard
             key={blood.group}

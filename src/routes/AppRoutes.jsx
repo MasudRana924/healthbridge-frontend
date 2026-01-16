@@ -9,6 +9,7 @@ import Cart from '../pages/cart/Cart';
 import Shipping from '../pages/cart/Shipping';
 import MedicineLayout from '../pages/layout/MedicineLayout';
 import NurseLayout from '../pages/layout/NurseLayout';
+import NurseDetails from '../pages/nurse/NurseDetails';
 import SingleDoctor from '../pages/doctors/SingleDoctor';
 import OnsiteAppointmentBooking from '../pages/appointment/OnsiteAppointmentBooking';
 import UserLayout from '../pages/user-layout/UserLayout';
@@ -47,9 +48,10 @@ const AppRoutes = () => {
             <Route path="/medicine/store" element={<MedicineLayout />} />
             <Route path="/doctor/:doctorId" element={<SingleDoctor />}></Route>
             <Route path="/nurses" element={<NurseLayout />} />
+            <Route path="/nurse/:id" element={<NurseDetails />} />
 
-           {/* blood */}
-           <Route path="/blood-store" element={<BloodLayout />} />
+            {/* blood */}
+            <Route path="/blood-store" element={<BloodLayout />} />
 
 
 

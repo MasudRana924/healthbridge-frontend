@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Search } from 'lucide-react';
+import { Icon } from '@iconify/react';
 import { fetchFilterMedicne } from '../../features/medicine/FilterMedicineSlice';
 import Medicines from '../../components/medicines/Medicines';
-import SkeletonMedicines from '../../components/medicines/SkeletonMedicines';
+
 const Medicine = () => {
     const dispatch = useDispatch();
     const { medicines } = useSelector(state => state.medicines.medicines);
@@ -16,51 +16,47 @@ const Medicine = () => {
 
     let content;
 
-    if (medicines?.length === 0) {
+    if (medicines?.length === 0 && !isLoading) {
         content = (
-            <div className="w-full  md:mt-16  flex flex-col items-center justify-center py-12 px-4">
-            <div className="bg-gray-50 rounded-full p-6 mb-6">
-                <Search className="w-16 h-16 text-violet-500" />
+            <div className="flex flex-col items-center justify-center py-20 text-center col-span-12">
+                <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mb-6 text-slate-300">
+                    <Icon icon="solar:pill-broken-bold-duotone" className="text-5xl" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-800 mb-2">
+                    No Medicine Found
+                </h3>
+                <p className="text-slate-500 max-w-sm mx-auto">
+                    We couldn't find any medicine matching your search criteria. Try adjusting your search terms.
+                </p>
             </div>
-
-            <h3 className="text-xl font-semibold text-violet-500 mb-2">
-                No Medicine Found
-            </h3>
-
-            <p className="text-gray-500 text-center max-w-sm mb-6">
-                We couldnt find any medicine matching your search criteria. Try adjusting your filters or search terms.
-            </p>
-        </div>
         );
     }
 
-    if (medicines?.length > 0) {
-        // content = medicines.map(medicine => <Medicines key={medicine._id} medicine={medicine} />);
-          content = (
-                     <div className="grid grid-cols-12 gap-4 p-3 lg:p-0 lg:w-3/4 2xl:w-3/4 mx-auto lg:px-0 min-h-[300px]">
-                         {medicines.map(medicine => (
-                             <Medicines key={medicine._id} medicine={medicine} />
-                         ))}
-                     </div>
-                 );
+    if (medicines?.length > 0 && !isLoading) {
+        content = medicines.map(medicine => (
+            <Medicines key={medicine._id} medicine={medicine} />
+        ));
     }
 
     return (
-        <div className="flex flex-col ">
-            <section className="flex-grow pt-12 mb-10 lg:mt-16">
+        <div className="w-full">
+            <div className="grid grid-cols-12 gap-6">
                 {isLoading ? (
-                    <div className="grid grid-cols-12 gap-4 p-3 lg:p-0 lg:w-3/4 2xl:w-2/4 mx-auto lg:px-0 min-h-[300px]">
-                        {/* Show skeleton loaders when loading */}
-                        {Array(6).fill().map((_, index) => (
-                            <SkeletonMedicines key={index} />
-                        ))}
-                    </div>
+                    Array(6).fill().map((_, index) => (
+                        <div key={index} className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-4 bg-white rounded-2xl p-4 border border-slate-100 h-[380px] flex flex-col animate-pulse">
+                            <div className="bg-slate-100 h-48 rounded-xl mb-4 w-full"></div>
+                            <div className="h-4 bg-slate-100 rounded w-3/4 mb-2"></div>
+                            <div className="h-4 bg-slate-100 rounded w-1/4 mb-6"></div>
+                            <div className="mt-auto flex justify-between items-center">
+                                <div className="h-6 bg-slate-100 rounded w-20"></div>
+                                <div className="h-10 bg-slate-100 rounded w-24"></div>
+                            </div>
+                        </div>
+                    ))
                 ) : (
-                    <div className="w-full md:w-full lg:w-full">
-                        {content}
-                    </div>
+                    content
                 )}
-            </section>
+            </div>
         </div>
     );
 };

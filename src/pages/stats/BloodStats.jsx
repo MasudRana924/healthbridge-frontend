@@ -1,4 +1,4 @@
-import { Droplet, Heart, Clock } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 const BloodStats = () => {
   const bloodStats = [
@@ -7,59 +7,72 @@ const BloodStats = () => {
       name: 'Blood Groups Available',
       value: '8+',
       description: 'All common blood groups',
-      icon: Droplet,
+      icon: 'solar:drop-bold-duotone',
+      color: 'text-red-500',
+      bg: 'bg-red-50'
     },
     {
       id: 2,
       name: 'Donors Connected',
       value: '5k+',
-      description: 'Verified blood donors in your area',
-      icon: Heart,
+      description: 'Verified blood donors near you',
+      icon: 'solar:heart-angle-bold-duotone',
+      color: 'text-pink-500',
+      bg: 'bg-pink-50'
     },
     {
       id: 3,
       name: 'Availability Time',
       value: '24/7',
       description: 'Round-the-clock assistance',
-      icon: Clock,
+      icon: 'solar:clock-circle-bold-duotone',
+      color: 'text-orange-500',
+      bg: 'bg-orange-50'
+    },
+    {
+      id: 4,
+      name: 'Successful Donations',
+      value: '12k+',
+      description: 'Lives saved through platform',
+      icon: 'solar:hand-shake-bold-duotone',
+      color: 'text-teal-500',
+      bg: 'bg-teal-50'
     },
   ];
 
   return (
-    <div className="w-11/12 md:w-10/12 lg:w-10/12 xl:w-10/12 2xl:w-9/12 mx-auto mt-12 md:mt-36">
-      <div className="">
-        <div className="text-start mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl mb-4">
-            Blood Services at a Glance
-          </h2>
-          <p className="text-start text-md text-gray-600">
-            Providing life-saving connections and resources for those in need of blood
-          </p>
-        </div>
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center md:text-left mb-12">
+        <h2 className="text-3xl font-bold text-slate-800 sm:text-4xl mb-4">
+          Blood Services Impact
+        </h2>
+        <p className="text-lg text-slate-500 max-w-2xl">
+          Building a reliable network of life-saving connections.
+        </p>
+      </div>
 
-        <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {bloodStats.map((stat) => (
-            <div
-              key={stat.id}
-              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
-            >
-              <div className="flex flex-col items-center">
-                <div className="p-3 bg-red-50 rounded-full mb-4">
-                  <stat.icon className="h-8 w-8 text-red-600" />
-                </div>
-                <dt className="text-sm font-medium text-gray-500 text-center">
-                  {stat.name}
-                </dt>
-                <dd className="mt-2 text-3xl font-bold text-red-600">
-                  {stat.value}
-                </dd>
-                <p className="mt-2 text-sm text-gray-600 text-center">
-                  {stat.description}
-                </p>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {bloodStats.map((stat) => (
+          <div
+            key={stat.id}
+            className="bg-slate-50 p-8 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-slate-100 group"
+          >
+            <div className="flex flex-col items-center text-center">
+              <div className={`p-4 ${stat.bg} rounded-2xl mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                <Icon icon={stat.icon} className={`text-4xl ${stat.color}`} />
               </div>
+              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                {stat.name}
+              </h3>
+              <div className="text-4xl font-extrabold text-slate-800 mb-2">
+                {stat.value}
+              </div>
+              <p className="text-sm text-slate-500">
+                {stat.description}
+              </p>
             </div>
-          ))}
-        </dl>
+          </div>
+        ))}
       </div>
     </div>
   );

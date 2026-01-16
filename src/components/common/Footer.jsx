@@ -1,251 +1,120 @@
-import { Box, Container, Grid, Typography, Link, Divider } from "@mui/material";
-import { Facebook, LinkedIn, Instagram } from "@mui/icons-material";
+import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <Box
-            component="footer"
-            sx={{
-                backgroundColor: "#480ca8",
-                py: 4,
-                color: "white",
-            }}
-        >
-            <Container maxWidth="lg">
-                <Grid container spacing={4}>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Typography
-                            variant="h6"
-                            gutterBottom
-                            sx={{ fontSize: "16px", fontWeight: "bold", lineHeight: "1.5" }}
-                        >
+        <footer className="bg-slate-900 pt-16 pb-8 text-slate-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    {/* Services */}
+                    <div>
+                        <h3 className="text-white text-lg font-bold mb-6 flex items-center gap-2">
+                            <Icon icon="solar:stethoscope-bold" className="text-primary-500" />
                             Our Services
-                        </Typography>
-                        <Box sx={{ pl: 0, fontSize: "14px" }}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        gutterBottom
-                                        sx={{ fontSize: "14px", lineHeight: "1.8" }}
-                                    >
-                                        <Link href="#" color="inherit" underline="none">
-                                            Find Doctors
-                                        </Link>
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        gutterBottom
-                                        sx={{ fontSize: "14px", lineHeight: "1.8" }}
-                                    >
-                                        <Link href="#" color="inherit" underline="none">
-                                            Order Medicine
-                                        </Link>
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        gutterBottom
-                                        sx={{ fontSize: "14px", lineHeight: "1.8" }}
-                                    >
-                                        <Link href="#" color="inherit" underline="none">
-                                            Book Nurses
-                                        </Link>
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        gutterBottom
-                                        sx={{ fontSize: "14px", lineHeight: "1.8" }}
-                                    >
-                                        <Link href="#" color="inherit" underline="none">
-                                            Call Ambulance
-                                        </Link>
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        gutterBottom
-                                        sx={{ fontSize: "14px", lineHeight: "1.8" }}
-                                    >
-                                        <Link href="#" color="inherit" underline="none">
-                                            Health Packages
-                                        </Link>
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        gutterBottom
-                                        sx={{ fontSize: "14px", lineHeight: "1.8" }}
-                                    >
-                                        <Link href="#" color="inherit" underline="none">
-                                            Lab Tests
-                                        </Link>
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </Grid>
+                        </h3>
+                        <ul className="space-y-3 text-sm">
+                            {[
+                                "Find Doctors",
+                                "Order Medicine",
+                                "Book Nurses",
+                                "Call Ambulance",
+                                "Health Packages",
+                                "Lab Tests"
+                            ].map((item) => (
+                                <li key={item}>
+                                    <Link to="#" className="hover:text-primary-400 transition-colors flex items-center gap-2">
+                                        <Icon icon="solar:arrow-right-align-bold-duotone" className="text-xs text-primary-500" />
+                                        {item}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Typography
-                            variant="h6"
-                            gutterBottom
-                            sx={{ fontSize: "16px", fontWeight: "bold", lineHeight: "1.5" }}
-                        >
+                    {/* Payment Options */}
+                    <div>
+                        <h3 className="text-white text-lg font-bold mb-6 flex items-center gap-2">
+                            <Icon icon="solar:card-bold" className="text-primary-500" />
                             Payment Options
-                        </Typography>
-                        <Box
-                            sx={{
-                                display: "grid",
-                                gridTemplateColumns: "repeat(1, 1fr)",
-                                gap: "8px",
-                            }}
-                        >
-                            <img
-                                src="/api/placeholder/240/80"
-                                alt="Payment Methods Accepted"
-                                style={{ maxWidth: "80%" }}
-                            />
-                        </Box>
-                    </Grid>
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                            {/* Placeholders for payment icons using Iconify */}
+                            <div className="bg-white p-2 rounded flex items-center justify-center w-12 h-8">
+                                <Icon icon="logos:visa" className="text-2xl" />
+                            </div>
+                            <div className="bg-white p-2 rounded flex items-center justify-center w-12 h-8">
+                                <Icon icon="logos:mastercard" className="text-2xl" />
+                            </div>
+                            <div className="bg-white p-2 rounded flex items-center justify-center w-12 h-8">
+                                <Icon icon="logos:bkash" className="text-2xl" />
+                            </div>
+                        </div>
+                    </div>
 
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Typography
-                            variant="h6"
-                            gutterBottom
-                            sx={{ fontSize: "16px", fontWeight: "bold", lineHeight: "1.5" }}
-                        >
-                            24/7 Medical Support
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            gutterBottom
-                            sx={{ fontSize: "14px", lineHeight: "1.8" }}
-                        >
-                            Emergency medical assistance available 24/7. Our dedicated team is always ready to help you with medical emergencies, doctor appointments, and MedEase queries.
-                        </Typography>
-                        <Typography
-                            variant="h6"
-                            gutterBottom
-                            sx={{
-                                fontSize: "16px",
-                                fontWeight: "bold",
-                                lineHeight: "1.5",
-                                mt: 2,
-                            }}
-                        >
-                            Main Medical Center
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            sx={{ fontSize: "14px", lineHeight: "1.8" }}
-                        >
-                            MedEase Medical Center
-                            <br />
-                            123 Medical Avenue
-                        </Typography>
-                    </Grid>
+                    {/* Support */}
+                    <div>
+                        <h3 className="text-white text-lg font-bold mb-6 flex items-center gap-2">
+                            <Icon icon="solar:chat-round-call-bold" className="text-primary-500" />
+                            24/7 Support
+                        </h3>
+                        <p className="text-sm leading-relaxed mb-6">
+                            Emergency medical assistance available 24/7. Our dedicated team is always ready to help.
+                        </p>
+                        <div className="space-y-3">
+                            <div className="flex items-start gap-3">
+                                <Icon icon="solar:map-point-bold" className="text-primary-500 text-xl mt-1" />
+                                <div>
+                                    <div className="text-white font-medium">Main Center</div>
+                                    <div className="text-sm">123 Medical Avenue</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Typography
-                            variant="h6"
-                            gutterBottom
-                            sx={{ fontSize: "16px", fontWeight: "bold", lineHeight: "1.5" }}
-                        >
+                    {/* Contact */}
+                    <div>
+                        <h3 className="text-white text-lg font-bold mb-6 flex items-center gap-2">
+                            <Icon icon="solar:phone-calling-bold" className="text-primary-500" />
                             Contact Us
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            sx={{ fontSize: "14px", lineHeight: "1.8" }}
-                        >
-                            Emergency: 1-800-Medease
-                            <br />
-                            support@MedEase.com
-                            <br />
-                            Appointments: +1 (555) 123-4567
-                        </Typography>
-                        <Box sx={{ display: "flex", gap: "12px", mt: 2 }}>
-                            <Link
-                                href="#"
-                                color="inherit"
-                                underline="none"
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: "36px",
-                                    height: "36px",
-                                    borderRadius: "50%",
-                                    backgroundColor: "#3b5998",
-                                    color: "white",
-                                    transition: "background-color 0.3s",
-                                    "&:hover": {
-                                        backgroundColor: "#2d4373",
-                                    },
-                                }}
-                            >
-                                <Facebook />
-                            </Link>
-                            <Link
-                                href="#"
-                                color="inherit"
-                                underline="none"
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: "36px",
-                                    height: "36px",
-                                    borderRadius: "50%",
-                                    backgroundColor: "#0A66C2",
-                                    color: "white",
-                                    transition: "background-color 0.3s",
-                                    "&:hover": {
-                                        backgroundColor: "#003b75",
-                                    },
-                                }}
-                            >
-                                <LinkedIn />
-                            </Link>
-                            <Link
-                                href="#"
-                                color="inherit"
-                                underline="none"
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: "36px",
-                                    height: "36px",
-                                    borderRadius: "50%",
-                                    backgroundColor: "#E4405F",
-                                    color: "white",
-                                    transition: "background-color 0.3s",
-                                    "&:hover": {
-                                        backgroundColor: "#D81B60",
-                                    },
-                                }}
-                            >
-                                <Instagram />
-                            </Link>
-                        </Box>
-                    </Grid>
-                </Grid>
-                <Divider sx={{ mt: 2 }} />
-                <Box
-                    sx={{
-                        mt: 2,
-                        textAlign: "center",
-                    }}
-                >
-                    <Typography
-                        variant="body2"
-                        sx={{ fontSize: "14px", lineHeight: "1.5" }}
-                    >
-                        © {new Date().getFullYear()} MedEase Hub - Your Complete MedEase Solution
-                    </Typography>
-                </Box>
-            </Container>
-        </Box>
+                        </h3>
+                        <div className="space-y-3 text-sm">
+                            <div className="flex items-center gap-3 group">
+                                <div className="p-2 bg-slate-800 rounded-lg group-hover:bg-primary-500/20 transition-colors">
+                                    <Icon icon="solar:phone-bold" className="text-primary-500" />
+                                </div>
+                                <span>1-800-HealthBridge</span>
+                            </div>
+                            <div className="flex items-center gap-3 group">
+                                <div className="p-2 bg-slate-800 rounded-lg group-hover:bg-primary-500/20 transition-colors">
+                                    <Icon icon="solar:letter-bold" className="text-primary-500" />
+                                </div>
+                                <span>support@healthbridge.com</span>
+                            </div>
+                        </div>
+
+                        <div className="mt-6 flex gap-3">
+                            {["facebook", "instagram", "linkedin"].map((social) => (
+                                <a
+                                    key={social}
+                                    href="#"
+                                    className="p-2 bg-slate-800 rounded-lg hover:bg-primary-500 hover:text-white transition-all transform hover:-translate-y-1"
+                                >
+                                    <Icon icon={`mdi:${social}`} className="text-xl" />
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+                    <p>© {new Date().getFullYear()} HealthBridge. All rights reserved.</p>
+                    <div className="flex gap-6">
+                        <Link to="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+                        <Link to="#" className="hover:text-white transition-colors">Terms of Service</Link>
+                    </div>
+                </div>
+            </div>
+        </footer>
     );
 };
 

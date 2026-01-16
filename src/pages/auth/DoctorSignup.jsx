@@ -1,358 +1,44 @@
-// import { TextField } from '@mui/material';
-// import Button from '@mui/material/Button';
-// import { useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
-// import { useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-// import { createDoctorSignUp } from '../../features/doctors/doctorsignupSlice';
-// import Navbar from '../../components/common/Navbar';
-// import Footer from '../../components/common/Footer';
-// import { message } from 'antd';
-// import { FaCamera } from 'react-icons/fa';
-// import './Auth.css'
-// const DoctorSignup = () => {
-//     const dispatch = useDispatch();
-//     const { success,isLoading } = useSelector(
-//         (state) => state.doctorsignup
-//     );
-//     const navigate = useNavigate()
-//     const [avatar, setAvatar] = useState("/Doctor.png");
-//     const [avatarPreview, setAvatarPreview] = useState("/Doctor.png");
-//     const [title, setTitle] = useState('');
-//     const [name, setName] = useState('');
-//     const [email, setEmail] = useState('');
-//     const [gender, setGender] = useState('');
-//     const [fees, setFees] = useState('');
-//     const [nid_No, setnid_No] = useState('');
-//     const [bmdc_No, setbmdc_No] = useState('');
-//     const [type, setType] = useState('');
-//     const [phone, setPhone] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [degree, setDegree] = useState("");
-//     const [expert, setExpert] = useState("");
-//     const [experience, setExperience] = useState("");
-//     const [work, setWork] = useState("");
-//     const data = ({ title, gender, fees, nid_No, bmdc_No, type, phone, name, email, password, degree, expert, work, experience, avatar });
-//     const registerSubmit = (e) => {
-//         e.preventDefault();
-//         if (title && gender && fees && nid_No && bmdc_No && type && phone && name && email && password && degree && expert && work && experience && avatar) {
-//             dispatch(createDoctorSignUp(data));
-//         }
-//     }
-//     useEffect(() => {
-//         if (success) {
-//             navigate('/doctor/login');
-//             message.success("Account create successfully ")
-//         }
-//     }, [success, navigate]);
-//     const registerDataChange = (e) => {
-//         const reader = new FileReader();
-//         reader.onload = () => {
-//             if (reader.readyState === 2) {
-//                 setAvatarPreview(reader.result);
-//                 setAvatar(reader.result);
-//             }
-//         };
-//         reader.readAsDataURL(e.target.files[0]);
-//     };
-//     const titles = [
-//         {
-
-//             label: 'Choose title ',
-//         },
-//         {
-//             value: 'Dr.',
-//             label: 'Dr.',
-//         },
-//         {
-//             value: 'Prof. Dr.',
-//             label: 'Prof. Dr.',
-//         },
-//         {
-//             value: 'Ass.Prof. Dr.',
-//             label: 'Ass.Prof. Dr.',
-//         },
-//         {
-//             value: 'Assoc.Prof. Dr.',
-//             label: 'Assoc.Prof. Dr.',
-//         },
-//     ];
-//     const genders = [
-//         {
-
-//             label: 'Select Gender ',
-//         },
-//         {
-//             value: 'Male',
-//             label: 'Male',
-//         },
-//         {
-//             value: 'Female',
-//             label: 'Female',
-//         },
-//     ];
-//     const types = [
-//         {
-
-//             label: 'Choose type ',
-//         },
-//         {
-//             value: 'Medical',
-//             label: 'Medical',
-//         },
-//         {
-//             value: 'Dental',
-//             label: 'Dental',
-//         },
-//     ];
-
-//     return (
-//         <div>
-//             <Navbar />
-//             <div className=" mt-28 lg:mt-40 lg:flex justify-between lg:gap-4 mb-10">
-
-//                 <div className="w-full">
-
-//                     <div className="mt-16 hidden lg:block ">
-//                         <p className="text-4xl text-start  font-bold w-3/4 ml-10" style={{ color: '#EB569A' }}>Are You A Qualified Doctor?</p>
-//                         <p className=" text-gray-900 lg:text-3xl text-start lg:w-3/4 ml-10 font-bold mt-12">Join the forefront of digital healthcare</p>
-//                         <p className="text-gray-900 text-xl text-start ml-10 lg:w-3/4  mt-5">Join HealthBridge network and create your virtual chamber provide medical consultancy via video call and expand the reach of your service.</p>
-//                     </div>
-//                     <div className="mt-16 hidden lg:block ">
-//                         <p className="text-4xl text-start  font-bold w-3/4  ml-10" style={{ color: '#EB569A' }}>Benefits Of Joining</p>
-//                         <p className="text-gray-900 text-xl text-start  lg:w-3/4 ml-10 mt-10">Doctors can join the platform using our simple on boarding process. We verify every doctor to make sure only BMDC authorised doctors are providing consultation using our latest technology.</p>
-//                         <p className="text-gray-900 text-xl text-start  lg:w-3/4 ml-10 mt-10">You will be at the forefront of digital healthcare innovations providing accessible patient care for all.</p>
-//                         <p className="text-gray-900 text-xl text-start  lg:w-3/4 ml-10 mt-10">You will be working independently, making autonomous medical decisions, and supported by our HealthBridge technical team who are here to assist both patient and yourself when you’re on session or outside sessions.</p>
-//                     </div>
-
-//                     <div className="mt-16 hidden lg:hidden">
-//                         <p className=" text-2xl lg:text-4xl text-start  font-bold lg:w-3/4 ml-10 lg:ml-0" style={{ color: '#EB569A' }}>Are You A Qualified Doctor?</p>
-//                         <p className="text-xl text-gray-900 lg:text-3xl text-center mt-12 font-bold lg:ml-3">Join the forefront of digital healthcare</p>
-//                         <p className="text-gray-900 text-xl text-start lg:ml-0 lg:w-3/4 ml-10 mt-10">Join HealthBridge network and create your virtual chamber provide medical consultancy via video call and expand the reach of your service.</p>
-//                     </div>
-//                     <div className=" block lg:hidden ">
-//                         <p className="text-xl text-start  font-bold w-3/4 ml-10 " style={{ color: '#EB569A' }}>Are You A Qualified Doctor?</p>
-//                         <p className=" text-gray-900 text-start w-3/4 ml-10 mt-3 font-bold ">Join the forefront of digital healthcare</p>
-//                         <p className="text-gray-900 text-start text-xl w-3/4 ml-10 mt-5 mb-12">Join HealthBridge network and create your virtual chamber provide medical consultancy via video call and expand the reach of your service.</p>
-//                     </div>
-//                 </div>
-//                 <div className="w-3/4 mx-auto lg:w-full lg:mt-16 mt-10 ">
-//                     <p className="text-2xl lg:text-4xl lg:text-center font-bold  lg:w-3/4  " style={{ color: '#EB569A' }}>Doctors Registration</p>
-//                     <form action="" className=" mt-8" onSubmit={registerSubmit}>
-//                         <div className="avatar-container">
-//                             <img
-//                                 src={avatarPreview}
-//                                 alt="Avatar Preview"
-//                                 className="avatar-preview"
-//                             />
-//                             <label htmlFor="avatar-upload" className="avatar-upload-icon">
-//                                 <FaCamera className="camera-icon" />
-//                                 <input
-//                                     type="file"
-//                                     id="avatar-upload"
-//                                     name="avatar"
-//                                     accept="image/*"
-//                                     onChange={registerDataChange}
-//                                     className="hidden"
-//                                 />
-//                             </label>
-//                         </div>
-//                         {/* <div className="mt-12 lg:w-3/4 mx-auto lg:flex lg:justify-center gap-6">
-//                             <TextField
-//                                 id="title"
-//                                 select
-//                                 label="Title"
-//                                 variant="standard"
-//                                 className="bg-white w-full mb-12"
-//                                 onChange={(e) => setTitle(e.target.value)}
-//                                 SelectProps={{ native: true }}
-//                             >
-//                                 {titles.map((option) => (
-//                                     <option key={option.value} value={option.value}>
-//                                         {option.label}
-//                                     </option>
-//                                 ))}
-//                             </TextField>
-//                             <TextField
-//                                 id="name"
-//                                 label="Name"
-//                                 variant="standard"
-//                                 className="w-full"
-//                                 value={name}
-//                                 onChange={(e) => setName(e.target.value)}
-//                             />
-//                         </div> */}
-//                         <div className="mt-12 lg:w-3/4 mx-auto  lg:flex lg:justify-center lg:ml-0 lg:mr-0 gap-6">
-//                             {/* <TextField id="standard-basic" label="Title" variant="standard" className="w-full lg:w-2/4 mx-auto mt-12" value={title} onChange={(e) => setTitle(e.target.value)} /> */}
-//                             <TextField
-//                                 id="standard-select-currency-native"
-//                                 select
-//                                 label="Title"
-//                                 defaultValue="EUR"
-//                                 SelectProps={{
-//                                     native: true,
-//                                 }}
-//                                 variant="standard"
-//                                 className="bg-white w-full mb-12"
-//                                 onChange={(e) => setTitle(e.target.value)}
-//                             >
-//                                 {titles.map((option) => (
-//                                     <option key={option.value} value={option.value}>
-//                                         {option.label}
-//                                     </option>
-//                                 ))}
-//                             </TextField>
-
-//                             <div className="w-full mt-3 lg:mt-0">
-//                                 <TextField id="standard-basic" label="Name" variant="standard" className="w-full" value={name} onChange={(e) => setName(e.target.value)} />
-//                             </div>
-//                         </div>
-
-//                         <div className="mt-7 lg:mt-12 lg:w-3/4 mx-auto  lg:flex lg:justify-center lg:ml-0 lg:mr-0 gap-6">
-//                             <TextField
-//                                 id="standard-select-currency-native"
-//                                 select
-//                                 label="Gender"
-//                                 defaultValue="EUR"
-//                                 SelectProps={{
-//                                     native: true,
-//                                 }}
-//                                 variant="standard"
-//                                 className="bg-white w-full "
-//                                 onChange={(e) => setGender(e.target.value)}
-//                             >
-//                                 {genders.map((option) => (
-//                                     <option key={option.value} value={option.value}>
-//                                         {option.label}
-//                                     </option>
-//                                 ))}
-//                             </TextField>
-//                             <div className="w-full  mt-3 lg:mt-0">
-//                                 <TextField id="standard-basic" label="Degree" variant="standard" className="w-full" value={degree} onChange={(e) => setDegree(e.target.value)} />
-//                             </div>
-//                         </div>
-
-//                         <div className="mt-5 lg:mt-12 lg:w-3/4 mx-auto  lg:flex lg:justify-center lg:ml-0 lg:mr-0 gap-6">
-//                             <TextField id="standard-basic" label="Expert" variant="standard" className="w-full mt-12" value={expert} onChange={(e) => setExpert(e.target.value)} />
-//                             <div className="w-full  mt-3 lg:mt-0">
-//                                 <TextField id="standard-basic" label="Experience" variant="standard" className="w-full  mt-12" value={experience} onChange={(e) => setExperience(e.target.value)} />
-//                             </div>
-
-//                         </div>
-//                         <div className="mt-5 lg:mt-12 lg:w-3/4 mx-auto  lg:flex lg:justify-center lg:ml-0 lg:mr-0 gap-6">
-//                             <TextField id="standard-basic" label="Work" variant="standard" className="w-full  mt-12" value={work} onChange={(e) => setWork(e.target.value)} />
-
-//                             <div className="w-full mt-3 lg:mt-0">
-//                                 <TextField id="standard-basic" label="Fees" variant="standard" className="w-full " value={fees} onChange={(e) => setFees(e.target.value)} />
-//                             </div>
-//                         </div>
-//                         <div className="mt-5 lg:mt-12 lg:w-3/4 mx-auto  lg:flex lg:justify-center lg:ml-0 lg:mr-0 gap-6">
-//                             <TextField id="standard-basic" label="NID / Passport Number" variant="standard" className="w-full  mt-12" value={nid_No} onChange={(e) => setnid_No(e.target.value)} />
-//                             <div className="w-full  mt-3 lg:mt-0" >
-//                                 <TextField id="standard-basic" label="BMDC Registration Number" variant="standard" className="w-full" value={bmdc_No} onChange={(e) => setbmdc_No(e.target.value)} />
-//                             </div>
-//                         </div>
-//                         <div className="mt-5 lg:mt-12 lg:w-3/4 mx-auto  lg:flex lg:justify-center lg:ml-0 lg:mr-0 gap-6">
-//                             <TextField
-//                                 id="standard-select-currency-native"
-//                                 select
-//                                 label="Doctor Type"
-//                                 defaultValue="EUR"
-//                                 SelectProps={{
-//                                     native: true,
-//                                 }}
-//                                 variant="standard"
-//                                 className="bg-white w-full"
-//                                 onChange={(e) => setType(e.target.value)}
-//                             >
-//                                 {types.map((option) => (
-//                                     <option key={option.value} value={option.value}>
-//                                         {option.label}
-//                                     </option>
-//                                 ))}
-//                             </TextField>
-
-//                             <div className="w-full  mt-3 lg:mt-0">
-//                                 <TextField id="standard-basic" label="Phone Number" variant="standard" className="w-full  " value={phone} onChange={(e) => setPhone(e.target.value)} />
-//                             </div>
-//                         </div>
-
-
-//                         <div className="mt-5 lg:mt-12 lg:w-3/4 mx-auto  lg:flex lg:justify-center lg:ml-0 lg:mr-0 gap-6 mb-10">
-//                             <TextField id="standard-basic" label="Email" variant="standard" className="w-full mt-12" value={email} onChange={(e) => setEmail(e.target.value)} />
-//                             <div className="w-full  mt-3 lg:mt-0" >
-//                                 <TextField id="standard-basic" label="Password" variant="standard" className="w-full" value={password} onChange={(e) => setPassword(e.target.value)} />
-//                             </div>
-//                         </div>
-
-//                         <div className="lg:w-3/4">
-//                         {
-//                             isLoading ? <Button color="secondary"
-//                             variant="contained" className="w-full lg:w-full xl:w-2/4 mt-10 " onClick={registerSubmit}>Please wait ...</Button>:<Button color="secondary"
-//                             variant="contained" className="w-full lg:w-full xl:w-2/4 mt-10 " onClick={registerSubmit}>Register</Button>
-//                         }
-            
-//                         </div>
-//                         <div className="lg:w-3/4 mt-5">
-//                             <span className="text-sm tracking-wide text-gray-400 mt-8">Already have a account ?</span> <Link to="/doctor/login"><span className="text-sm font-semibold leading-6 text-gray-900">Please Login</span></Link>
-//                         </div>
-//                     </form>
-//                 </div>
-
-//             </div>
-//             <Footer />
-//         </div>
-//     );
-// };
-
-// export default DoctorSignup;
 import { useState, useEffect } from 'react';
-import { TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Camera } from 'lucide-react';
+import { Icon } from '@iconify/react';
 import { createDoctorSignUp } from '../../features/doctors/doctorsignupSlice';
 import Navbar from '../../components/common/Navbar';
 import Footer from '../../components/common/Footer';
 import { message } from 'antd';
 
 const DoctorSignup = () => {
-    // [Previous state declarations remain the same]
     const dispatch = useDispatch();
-    const { success,isLoading } = useSelector(
-        (state) => state.doctorsignup
-    );
-    const navigate = useNavigate()
+    const { success, isLoading } = useSelector((state) => state.doctorsignup);
+    const navigate = useNavigate();
+
+    // State
     const [avatar, setAvatar] = useState("/Doctor.png");
     const [avatarPreview, setAvatarPreview] = useState("/Doctor.png");
-    const [title, setTitle] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [gender, setGender] = useState('');
-    const [fees, setFees] = useState('');
-    const [nid_No, setnid_No] = useState('');
-    const [bmdc_No, setbmdc_No] = useState('');
-    const [type, setType] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [degree, setDegree] = useState("");
-    const [expert, setExpert] = useState("");
-    const [experience, setExperience] = useState("");
-    const [work, setWork] = useState("");
-    const data = ({ title, gender, fees, nid_No, bmdc_No, type, phone, name, email, password, degree, expert, work, experience, avatar });
-    const registerSubmit = (e) => {
-        e.preventDefault();
-        if (title && gender && fees && nid_No && bmdc_No && type && phone && name && email && password && degree && expert && work && experience && avatar) {
-            dispatch(createDoctorSignUp(data));
-        }
-    }
-    useEffect(() => {
-        if (success) {
-            navigate('/doctor/login');
-            message.success("Account create successfully ")
-        }
-    }, [success, navigate]);
+    const [formData, setFormData] = useState({
+        title: '',
+        name: '',
+        email: '',
+        gender: '',
+        fees: '',
+        nid_No: '',
+        bmdc_No: '',
+        type: '',
+        phone: '',
+        password: '',
+        degree: '',
+        expert: '',
+        experience: '',
+        work: '',
+    });
+
+    // Destructure for easy access
+    const { title, name, email, gender, fees, nid_No, bmdc_No, type, phone, password, degree, expert, experience, work } = formData;
+
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
     const registerDataChange = (e) => {
         const reader = new FileReader();
         reader.onload = () => {
@@ -363,273 +49,323 @@ const DoctorSignup = () => {
         };
         reader.readAsDataURL(e.target.files[0]);
     };
-    const titles = [
-        {
 
-            label: 'Choose title ',
-        },
-        {
-            value: 'Dr.',
-            label: 'Dr.',
-        },
-        {
-            value: 'Prof. Dr.',
-            label: 'Prof. Dr.',
-        },
-        {
-            value: 'Ass.Prof. Dr.',
-            label: 'Ass.Prof. Dr.',
-        },
-        {
-            value: 'Assoc.Prof. Dr.',
-            label: 'Assoc.Prof. Dr.',
-        },
-    ];
-    const genders = [
-        {
+    const registerSubmit = (e) => {
+        e.preventDefault();
+        // Basic validation could go here
+        dispatch(createDoctorSignUp({ ...formData, avatar }));
+    };
 
-            label: 'Select Gender ',
-        },
-        {
-            value: 'Male',
-            label: 'Male',
-        },
-        {
-            value: 'Female',
-            label: 'Female',
-        },
-    ];
-    const types = [
-        {
+    useEffect(() => {
+        if (success) {
+            navigate('/doctor/login');
+            message.success("Account created successfully. Please login.");
+        }
+    }, [success, navigate]);
 
-            label: 'Choose type ',
-        },
-        {
-            value: 'Medical',
-            label: 'Medical',
-        },
-        {
-            value: 'Dental',
-            label: 'Dental',
-        },
-    ];
+    const titles = ['Dr.', 'Prof. Dr.', 'Ass.Prof. Dr.', 'Assoc.Prof. Dr.'];
+    const genders = ['Male', 'Female'];
+    const types = ['Medical', 'Dental'];
+
     return (
-        <div className="min-h-screen bg-gray-50 mt-16">
+        <div className="min-h-screen bg-slate-50 flex flex-col">
             <Navbar />
-            <div className="container mx-auto px-4 py-8">
-                <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-start">
-                    {/* Left Panel - Information */}
-                    <div className="hidden lg:block space-y-12 pr-8 pt-12">
-                        <div className="space-y-6">
-                            <h1 className="text-5xl font-bold text-violet-500">
-                                Are You A Qualified Doctor?
-                            </h1>
-                            <p className="text-3xl font-semibold text-gray-800">
-                                Join the forefront of digital healthcare
-                            </p>
-                            <p className="text-xl text-gray-600">
-                                Join HealthBridge network and create your virtual chamber provide medical consultancy via video call and expand the reach of your service.
-                            </p>
-                        </div>
 
-                        <div className="space-y-6 bg-white p-8 rounded-xl shadow-lg">
-                            <h2 className="text-3xl font-bold text-violet-500">Benefits Of Joining</h2>
-                            <div className="space-y-4">
-                                {['Simple onboarding with BMDC verification',
-                                  'Be at the forefront of digital healthcare',
-                                  'Work independently with technical support'].map((benefit, index) => (
-                                    <div key={index} className="flex items-start space-x-4">
-                                        <div className="flex-shrink-0 w-6 h-6 mt-1 rounded-full bg-blue-100 flex items-center justify-center">
-                                            <div className="w-2 h-2 rounded-full bg-violet-500"></div>
-                                        </div>
-                                        <p className="text-lg text-gray-700">{benefit}</p>
-                                    </div>
-                                ))}
+            <div className="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto">
+                    <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-start">
+                        {/* Left Panel - Information */}
+                        <div className="hidden lg:block sticky top-32">
+                            <div className="mb-12">
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 border border-primary-100 mb-6">
+                                    <Icon icon="solar:stethoscope-bold" className="text-primary-600" />
+                                    <span className="text-sm font-bold text-primary-700">Join HealthBridge</span>
+                                </div>
+                                <h1 className="text-5xl font-bold text-slate-900 mb-6 leading-tight">
+                                    Are You A <br />
+                                    <span className="text-primary-600">Qualified Doctor?</span>
+                                </h1>
+                                <p className="text-xl text-slate-500 leading-relaxed font-light">
+                                    Join the HealthBridge network to create your virtual chamber, provide video consultations, and expand your reach to patients nationwide.
+                                </p>
                             </div>
-                        </div>
-                    </div>
 
-                    {/* Right Panel - Registration Form */}
-                    <div className="bg-white rounded-xl shadow-lg p-8 lg:p-12">
-                        <h2 className="text-3xl font-bold text-center text-violet-500 mb-8">
-                            Doctor Registration
-                        </h2>
-
-                        <form onSubmit={registerSubmit} className="space-y-6">
-                            {/* Avatar Upload */}
-                            <div className="flex justify-center mb-8">
-                                <div className="relative group">
-                                    <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-100 shadow-lg">
-                                        <img
-                                            src={avatarPreview}
-                                            alt="Profile"
-                                            className="w-full h-full object-cover"
-                                        />
+                            <div className="space-y-6">
+                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-start gap-4">
+                                    <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
+                                        <Icon icon="solar:verified-check-bold" className="text-2xl" />
                                     </div>
-                                    <label className="absolute bottom-0 right-0 bg-violet-500 p-3 rounded-full cursor-pointer shadow-lg hover:bg-violet-600 transition-colors">
-                                        <Camera className="h-5 w-5 text-white" />
-                                        <input
-                                            type="file"
-                                            className="hidden"
-                                            onChange={registerDataChange}
-                                            accept="image/*"
-                                        />
-                                    </label>
+                                    <div>
+                                        <h3 className="text-lg font-bold text-slate-800">Verified Platform</h3>
+                                        <p className="text-slate-500 text-sm mt-1">We ensure safety by verifying every doctor through BMDC.</p>
+                                    </div>
+                                </div>
+                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-start gap-4">
+                                    <div className="w-12 h-12 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center flex-shrink-0">
+                                        <Icon icon="solar:laptop-bold" className="text-2xl" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-bold text-slate-800">Digital Freedom</h3>
+                                        <p className="text-slate-500 text-sm mt-1">Work independently and make autonomous medical decisions.</p>
+                                    </div>
+                                </div>
+                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-start gap-4">
+                                    <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0">
+                                        <Icon icon="solar:users-group-two-rounded-bold" className="text-2xl" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-bold text-slate-800">Broad Reach</h3>
+                                        <p className="text-slate-500 text-sm mt-1">Connect with patients from all corners of the country.</p>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
 
-                            {/* Form Grid */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <TextField
-                                    select
-                                    label="Title"
-                                    variant="outlined"
-                                    fullWidth
-                                    onChange={(e) => setTitle(e.target.value)}
-                                    SelectProps={{ native: true }}
+                        {/* Right Panel - Registration Form */}
+                        <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 lg:p-10 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50 pointer-events-none"></div>
+
+                            <h2 className="text-2xl font-bold text-slate-800 mb-8 relative z-10">Doctor Registration</h2>
+
+                            <form onSubmit={registerSubmit} className="space-y-6 relative z-10">
+                                {/* Avatar Upload */}
+                                <div className="flex flex-col items-center mb-8">
+                                    <div className="relative group cursor-pointer">
+                                        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-slate-100 shadow-md group-hover:border-primary-200 transition-colors">
+                                            <img
+                                                src={avatarPreview}
+                                                alt="Profile"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <label className="absolute bottom-1 right-1 bg-primary-600 p-2.5 rounded-full cursor-pointer shadow-lg hover:bg-primary-700 transition-colors text-white">
+                                            <Icon icon="solar:camera-bold" className="text-lg" />
+                                            <input
+                                                type="file"
+                                                className="hidden"
+                                                onChange={registerDataChange}
+                                                accept="image/*"
+                                            />
+                                        </label>
+                                    </div>
+                                    <p className="text-sm text-slate-400 mt-3">Upload Profile Picture</p>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    {/* Personal Info */}
+                                    <div className="col-span-1 md:col-span-2">
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Personal Information</p>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Title</label>
+                                        <select
+                                            name="title"
+                                            value={title}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                        >
+                                            <option value="">Select Title</option>
+                                            {titles.map(t => <option key={t} value={t}>{t}</option>)}
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={name}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                            placeholder="e.g. John Doe"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Gender</label>
+                                        <select
+                                            name="gender"
+                                            value={gender}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                        >
+                                            <option value="">Select Gender</option>
+                                            {genders.map(g => <option key={g} value={g}>{g}</option>)}
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            value={phone}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                            placeholder="01XXXXXXXXX"
+                                        />
+                                    </div>
+
+                                    {/* Professional Info */}
+                                    <div className="col-span-1 md:col-span-2 mt-2">
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Professional Information</p>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Degree</label>
+                                        <input
+                                            type="text"
+                                            name="degree"
+                                            value={degree}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                            placeholder="e.g. MBBS, FCPS"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Specialization</label>
+                                        <input
+                                            type="text"
+                                            name="expert"
+                                            value={expert}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                            placeholder="e.g. Cardiology"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Speciality Type</label>
+                                        <select
+                                            name="type"
+                                            value={type}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                        >
+                                            <option value="">Select Type</option>
+                                            {types.map(t => <option key={t} value={t}>{t}</option>)}
+                                        </select>
+                                    </div>
+
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Experience (Years)</label>
+                                        <input
+                                            type="number"
+                                            name="experience"
+                                            value={experience}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                            placeholder="e.g. 5"
+                                        />
+                                    </div>
+
+                                    <div className="col-span-1 md:col-span-2">
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Current Workplace</label>
+                                        <input
+                                            type="text"
+                                            name="work"
+                                            value={work}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                            placeholder="Hospital or Clinic Name"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Consultation Fee (TK)</label>
+                                        <input
+                                            type="number"
+                                            name="fees"
+                                            value={fees}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                            placeholder="e.g. 1000"
+                                        />
+                                    </div>
+
+                                    {/* Verification Info */}
+                                    <div className="col-span-1 md:col-span-2 mt-2">
+                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Verification & Security</p>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">BMDC Reg. No</label>
+                                        <input
+                                            type="text"
+                                            name="bmdc_No"
+                                            value={bmdc_No}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">NID / Passport</label>
+                                        <input
+                                            type="text"
+                                            name="nid_No"
+                                            value={nid_No}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                        />
+                                    </div>
+
+                                    <div className="col-span-1 md:col-span-2">
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={email}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                            placeholder="email@example.com"
+                                        />
+                                    </div>
+
+                                    <div className="col-span-1 md:col-span-2">
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                                        <input
+                                            type="password"
+                                            name="password"
+                                            value={password}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                                            placeholder="Minimum 6 characters"
+                                        />
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="w-full py-4 mt-8 rounded-xl font-bold text-white bg-primary-600 hover:bg-primary-700 shadow-lg shadow-primary-500/30 transition-all transform active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                 >
-                                    {titles.map((option) => (
-                                        <option key={option.value} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
-                                </TextField>
+                                    {isLoading ? (
+                                        <>
+                                            <Icon icon="svg-spinners:ring-resize" className="text-xl" />
+                                            Creatng Account...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Complete Registration
+                                            <Icon icon="solar:arrow-right-bold" className="text-xl" />
+                                        </>
+                                    )}
+                                </button>
 
-                                <TextField
-                                    label="Full Name"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-
-                                <TextField
-                                    select
-                                    label="Gender"
-                                    variant="outlined"
-                                    fullWidth
-                                    onChange={(e) => setGender(e.target.value)}
-                                    SelectProps={{ native: true }}
-                                >
-                                    {genders.map((option) => (
-                                        <option key={option.value} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
-                                </TextField>
-
-                                <TextField
-                                    label="Degree"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={degree}
-                                    onChange={(e) => setDegree(e.target.value)}
-                                />
-
-                                <TextField
-                                    label="Specialization"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={expert}
-                                    onChange={(e) => setExpert(e.target.value)}
-                                />
-
-                                <TextField
-                                    label="Years of Experience"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={experience}
-                                    onChange={(e) => setExperience(e.target.value)}
-                                />
-
-                                <TextField
-                                    label="Current Workplace"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={work}
-                                    onChange={(e) => setWork(e.target.value)}
-                                />
-
-                                <TextField
-                                    label="Consultation Fee"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={fees}
-                                    onChange={(e) => setFees(e.target.value)}
-                                />
-
-                                <TextField
-                                    label="NID/Passport Number"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={nid_No}
-                                    onChange={(e) => setnid_No(e.target.value)}
-                                />
-
-                                <TextField
-                                    label="BMDC Registration No."
-                                    variant="outlined"
-                                    fullWidth
-                                    value={bmdc_No}
-                                    onChange={(e) => setbmdc_No(e.target.value)}
-                                />
-
-                                <TextField
-                                    select
-                                    label="Speciality Type"
-                                    variant="outlined"
-                                    fullWidth
-                                    onChange={(e) => setType(e.target.value)}
-                                    SelectProps={{ native: true }}
-                                >
-                                    {types.map((option) => (
-                                        <option key={option.value} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
-                                </TextField>
-
-                                <TextField
-                                    label="Phone Number"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                />
-
-                                <TextField
-                                    label="Email Address"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-
-                                <TextField
-                                    label="Password"
-                                    type="password"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={isLoading}
-                                className="w-full py-3 px-4 mt-8 rounded-lg font-medium text-white bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 transition-colors disabled:opacity-50"
-                            >
-                                {isLoading ? "Creating your account..." : "Complete Registration"}
-                            </button>
-
-                            <p className="text-center text-gray-600 mt-4">
-                                Already have an account?{' '}
-                                <Link to="/doctor/login" className="text-violet-500 hover:text-violet-600 font-medium">
-                                    Sign in instead
-                                </Link>
-                            </p>
-                        </form>
+                                <div className="text-center mt-6">
+                                    <p className="text-slate-500">
+                                        Already have an account?{' '}
+                                        <Link to="/doctor/login" className="text-primary-600 font-bold hover:text-primary-700 transition-colors">
+                                            Log In
+                                        </Link>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

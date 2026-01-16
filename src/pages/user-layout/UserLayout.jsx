@@ -1,58 +1,69 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Icon } from '@iconify/react';
 import Navbar from '../../components/common/Navbar';
 import Footer from '../../components/common/Footer';
 import { logout } from '../../features/user/Login/loginSlice';
-import { useDispatch } from 'react-redux';
 
 const UserLayout = () => {
     const dispatch = useDispatch();
     const sidebarItems = [
-        { name: "Account Information", path: "update-account" },
-        { name: "Change Password", path: "change-password" },
-        { name: "Consultations History", path: "consultations-history" },
-        { name: "Prescription History", path: "prescription-history" },
-        { name: "Hired Nurses History", path: "nurses-history" },
-        { name: "Orders History", path: "orders-history" },
+        { name: "Account Information", path: "update-account", icon: "solar:user-id-bold" },
+        { name: "Change Password", path: "change-password", icon: "solar:lock-password-bold" },
+        { name: "Consultations History", path: "consultations-history", icon: "solar:stethoscope-bold" },
+        { name: "Prescription History", path: "prescription-history", icon: "solar:document-medicine-bold" },
+        { name: "Hired Nurses History", path: "nurses-history", icon: "solar:user-hands-bold" },
+        { name: "Orders History", path: "orders-history", icon: "solar:cart-large-4-bold" },
     ];
 
     return (
-        <div className="flex flex-col min-h-screen">
-            {/* Navbar */}
+        <div className="flex flex-col min-h-screen bg-slate-50">
             <Navbar />
 
-            {/* Main Content */}
-            <div className="w-full md:w-11/12 md:flex-grow lg:w-10/12 mx-auto md:flex justify-center md:mt-44 mb-12 ">
-                {/* Left Sidebar */}
-                <div className=" hidden md:block w-1/4 bg-gray-50 p-4 ">
-                    <h2 className="text-lg font-semibold mb-4">User Account Settings</h2>
-                    <ul className="space-y-2">
-                        {sidebarItems.map((item, index) => (
-                            <li key={index} className="border-b">
-                                <NavLink
-                                    to={item.path}
-                                    className={({ isActive }) =>
-                                        `block py-2 px-4 rounded ${
-                                            isActive
-                                                ? 'bg-violet-500 text-white'
-                                                : 'text-gray-900 hover:bg-gray-200'
-                                        }`
-                                    }
-                                >
-                                    {item.name}
-                                </NavLink>
-                            </li>
-                        ))}
-                    </ul>
-                    <button  onClick={() => dispatch(logout())} className='mt-4 w-full bg-violet-500 h-10 border rounded-lg text-white'>Logout</button>
-                </div>
+            <div className="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+                    {/* Left Sidebar */}
+                    <div className="w-full md:w-1/4 lg:w-1/5 flex-shrink-0">
+                        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 sticky top-24">
+                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Settings</h2>
+                            <ul className="space-y-1">
+                                {sidebarItems.map((item, index) => (
+                                    <li key={index}>
+                                        <NavLink
+                                            to={item.path}
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${isActive
+                                                    ? 'bg-primary-50 text-primary-600'
+                                                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                                                }`
+                                            }
+                                        >
+                                            <Icon icon={item.icon} className="text-lg" />
+                                            {item.name}
+                                        </NavLink>
+                                    </li>
+                                ))}
+                            </ul>
 
-                {/* Right Content Area */}
-                <div className="w-full md:w-3/4 lg:w-3/4 bg-white p-6 mt-16 md:mt-0 lg:mt-0">
-                    <Outlet />
+                            <div className="mt-8 pt-6 border-t border-slate-100">
+                                <button
+                                    onClick={() => dispatch(logout())}
+                                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 font-medium transition-all"
+                                >
+                                    <Icon icon="solar:logout-2-bold" className="text-xl" />
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Content Area */}
+                    <div className="w-full md:w-3/4 lg:w-4/5">
+                        <Outlet />
+                    </div>
                 </div>
             </div>
 
-            {/* Footer */}
             <Footer />
         </div>
     );

@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-// import { updateProfile } from '../../features/user/updateprofile/updateProfileSlice';
-import { FaCamera } from 'react-icons/fa'; // React Icons
 import { updateProfile } from '../../features/user/Login/loginSlice';
+import { Icon } from '@iconify/react';
 
 const UserDetails = () => {
     const { loggeduser } = useSelector((state) => state.userDetails);
@@ -70,126 +69,101 @@ const UserDetails = () => {
     };
 
     return (
-        <div className="bg-white mb-20 ">
-            <div className="w-full">
-                <form onSubmit={handleUpdate}>
-                    <div className="w-full lg:w-full lg:m-0">
-                        {/* Avatar Section */}
-                        <div className="relative w-1/4 mx-auto">
-                            {/* Avatar Image */}
-                            <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border border-gray-300 shadow-lg">
-                                <img
-                                    src={formData.avatarPreview}
-                                    alt="Avatar Preview"
-                                    className="object-cover w-full h-full"
-                                />
-                                {/* Camera Icon */}
-                                <label
-                                    htmlFor="avatar"
-                                    className="absolute bottom-2 right-2 bg-violet-500 hover:bg-violet-600 text-white p-2 rounded-full cursor-pointer shadow-md"
-                                >
-                                    <FaCamera className="text-xl" />
-                                </label>
-                            </div>
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
+            <h2 className="text-xl font-bold text-slate-800 mb-8 flex items-center gap-2">
+                <Icon icon="solar:user-id-bold" className="text-primary-500" />
+                Account Information
+            </h2>
 
-                            {/* Hidden File Input */}
+            <form onSubmit={handleUpdate} className="max-w-2xl">
+                {/* Avatar Section */}
+                <div className="flex flex-col items-center mb-8">
+                    <div className="relative group cursor-pointer inline-block">
+                        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-slate-100 shadow-lg group-hover:border-primary-200 transition-colors">
+                            <img
+                                src={formData.avatarPreview}
+                                alt="Profile"
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                        <label className="absolute bottom-1 right-1 bg-primary-600 p-2.5 rounded-full cursor-pointer shadow-lg hover:bg-primary-700 transition-colors text-white">
+                            <Icon icon="solar:camera-bold" className="text-lg" />
                             <input
                                 type="file"
-                                id="avatar"
                                 name="avatar"
                                 accept="image/*"
                                 onChange={handleAvatarChange}
                                 className="hidden"
                             />
-                        </div>
-
-                        {/* Name */}
-                        <div className="w-3/4 mx-auto mt-5">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                Name
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                className="block w-full p-2 border border-gray-300 rounded-md"
-                                value={formData.name}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        {/* Email */}
-                        <div className="w-3/4 mx-auto mt-5">
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                className="block w-full p-2 border border-gray-300 rounded-md"
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        {/* Gender */}
-                        <div className="w-3/4 mx-auto mt-5">
-                            <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
-                                Gender
-                            </label>
-                            <input
-                                type="text"
-                                id="gender"
-                                name="gender"
-                                className="block w-full p-2 border border-gray-300 rounded-md"
-                                value={formData.gender}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        {/* Phone */}
-                        <div className="w-3/4 mx-auto mt-5">
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                                Phone
-                            </label>
-                            <input
-                                type="tel"
-                                id="phone"
-                                name="phone"
-                                className="block w-full p-2 border border-gray-300 rounded-md"
-                                value={formData.phone}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        {/* Birthdate */}
-                        <div className="w-3/4 mx-auto mt-5">
-                            <label htmlFor="birthdate" className="block text-sm font-medium text-gray-700">
-                                Birthdate
-                            </label>
-                            <input
-                                type="date"
-                                id="birthdate"
-                                name="birthdate"
-                                className="block w-full p-2 border border-gray-300 rounded-md"
-                                value={formData.birthdate}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        {/* Update Button */}
-                        <div className="w-3/4 mx-auto">
-                            <button
-                                type="submit"
-                                className="w-full mt-10 bg-violet-500 hover:bg-violet-700 text-white border-none py-2 px-4 rounded-md"
-                            >
-                                Update
-                            </button>
-                        </div>
+                        </label>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Email (Read Only)</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            readOnly
+                            className="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 cursor-not-allowed"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+                        <input
+                            type="tel"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Gender</label>
+                        <select
+                            name="gender"
+                            value={formData.gender}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                        >
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Date of Birth</label>
+                        <input
+                            type="date"
+                            name="birthdate"
+                            value={formData.birthdate}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                        />
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    className="mt-8 bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-primary-500/30 transition-all transform active:scale-95 flex items-center justify-center gap-2"
+                >
+                    <Icon icon="solar:diskette-bold" className="text-xl" />
+                    Save Changes
+                </button>
+            </form>
         </div>
     );
 };

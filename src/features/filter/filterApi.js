@@ -1,6 +1,6 @@
 import axios from "axios";
 import { api } from "../../config/index";
-export const getFilterDoctors = async (experts, fees, genders, ratingss,status) => {
+export const getFilterDoctors = async (experts, fees, genders, ratingss, status) => {
     let queryString = '';
     if (experts?.length > 0) {
         queryString += experts.map(tag => `expert=${tag}`).join("&");
@@ -29,5 +29,10 @@ export const getFilterNurses = async (expert, gender, location) => {
         link = `${api}/get/nurses?location=${location}`
     }
     const response = await axios.get(link);
+    return response.data;
+}
+
+export const getSingleNurse = async (id) => {
+    const response = await axios.get(`${api}/get/nurse/${id}`);
     return response.data;
 }

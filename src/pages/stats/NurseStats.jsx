@@ -1,65 +1,69 @@
-import { UserCheck, Home, Clock } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 const NurseStats = () => {
   const nurseStats = [
     {
       id: 1,
-      name: 'Qualified Nurses',
-      value: '500+',
-      description: 'Certified and experienced nursing staff',
-      icon: UserCheck,
+      name: 'Nurses Available',
+      value: '2k+',
+      description: 'Certified and experienced nurses',
+      icon: 'solar:user-heart-bold-duotone',
+      color: 'text-indigo-500',
+      bg: 'bg-indigo-50'
     },
     {
       id: 2,
-      name: 'Home Care Services',
-      value: '24/7',
-      description: 'Round-the-clock nursing care at home',
-      icon: Home,
+      name: 'Patient Satisfaction',
+      value: '98%',
+      description: 'Based on patient reviews',
+      icon: 'solar:smile-circle-bold-duotone',
+      color: 'text-green-500',
+      bg: 'bg-green-50'
     },
     {
       id: 3,
-      name: 'Response Time',
-      value: '30 min',
-      description: 'Quick and efficient nurse assignment',
-      icon: Clock,
+      name: 'Service Hours',
+      value: '24/7',
+      description: 'Round-the-clock nursing care',
+      icon: 'solar:clock-circle-bold-duotone',
+      color: 'text-orange-500',
+      bg: 'bg-orange-50'
     },
   ];
 
   return (
-    <div className="w-11/12 md:w-10/12 lg:w-10/12 xl:w-10/12 2xl:w-9/12 mx-auto ">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-start mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl mb-4">
-            Nursing Services at a Glance
-          </h2>
-          <p className="text-start text-md text-gray-600">
-            Providing skilled nursing care with compassion and reliability
-          </p>
-        </div>
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center md:text-left mb-12">
+        <h2 className="text-3xl font-bold text-slate-800 sm:text-4xl mb-4">
+          Nursing Services Impact
+        </h2>
+        <p className="text-lg text-slate-500 max-w-2xl">
+          Delivering professional care with compassion and expertise right at your home
+        </p>
+      </div>
 
-        <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {nurseStats.map((stat) => (
-            <div
-              key={stat.id}
-              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
-            >
-              <div className="flex flex-col items-center">
-                <div className="p-3 bg-blue-50 rounded-full mb-4">
-                  <stat.icon className="h-8 w-8 text-violet-600" />
-                </div>
-                <dt className="text-sm font-medium text-gray-500 text-center">
-                  {stat.name}
-                </dt>
-                <dd className="mt-2 text-3xl font-bold text-violet-600">
-                  {stat.value}
-                </dd>
-                <p className="mt-2 text-sm text-gray-600 text-center">
-                  {stat.description}
-                </p>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {nurseStats.map((stat) => (
+          <div
+            key={stat.id}
+            className="bg-slate-50 p-8 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-slate-100 group"
+          >
+            <div className="flex flex-col items-center text-center">
+              <div className={`p-4 ${stat.bg} rounded-2xl mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                <Icon icon={stat.icon} className={`text-4xl ${stat.color}`} />
               </div>
+              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                {stat.name}
+              </h3>
+              <div className="text-4xl font-extrabold text-slate-800 mb-2">
+                {stat.value}
+              </div>
+              <p className="text-sm text-slate-500">
+                {stat.description}
+              </p>
             </div>
-          ))}
-        </dl>
+          </div>
+        ))}
       </div>
     </div>
   );

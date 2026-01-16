@@ -1,77 +1,110 @@
-import { 
-    UserCheck, 
-    Home, 
-    HeartPulse, 
-    Clock 
-  } from 'lucide-react';
-  
-  const NurseFaqLayout = () => {
-    const nurseBenefits = [
-      {
-        icon: UserCheck,
-        title: "Certified Nurses",
-        description: "Highly trained and certified nursing professionals providing expert care in a variety of medical situations.",
-        highlight: "500+ Qualified Staff",
-      },
-      {
-        icon: Home,
-        title: "Home Nursing Care",
-        description: "Get personalized nursing care at your home for post-surgery recovery, elderly care, or chronic illness support.",
-        highlight: "24/7 Availability",
-      },
-      {
-        icon: HeartPulse,
-        title: "Critical Care Support",
-        description: "Experienced in handling critical care patients, including ventilator management and emergency response.",
-        highlight: "Expert Care",
-      },
-      {
-        icon: Clock,
-        title: "Fast Response Time",
-        description: "Quick nurse deployment to your location with an average response time of under 30 minutes.",
-        highlight: "Rapid Assistance",
-      }
-      
-    ];
-  
-    return (
-      <div className="w-11/12 md:w-10/12 lg:w-10/12 xl:w-10/12 2xl:w-9/12 mx-auto mt-8 md:mt-28">
-        <div className="text-start mb-12">
-          <h1 className="text-3xl font-bold text-gray-900 lg:text-4xl mb-4">
-            Why Choose Our Nursing Services?
-          </h1>
-          <p className="text-sm text-gray-600">
-            Providing compassionate and professional nursing care tailored to your needs—trusted by families and healthcare providers alike.
-          </p>
-        </div>
-  
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {nurseBenefits.map((item, index) => (
-            <div 
-              key={index}
-              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200"
-            >
-              <div className="flex items-center justify-center w-12 h-12 mb-4 bg-blue-100 rounded-lg">
-                <item.icon className="w-6 h-6 text-violet-600" />
-              </div>
-  
-              <div>
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                  {item.title}
-                </h2>
-                <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                  {item.description}
-                </p>
-                <span className="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-full">
-                  {item.highlight}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+import { Icon } from '@iconify/react';
+
+const NurseFaqLayout = () => {
+  const nurseBenefits = [
+    {
+      icon: "solar:diploma-verified-bold-duotone",
+      title: "Certified Nurses",
+      description: "All our nurses are certified, background-checked, and highly trained professionals.",
+      highlight: "100% Verified",
+      color: "text-indigo-500",
+      bg: "bg-indigo-50"
+    },
+    {
+      icon: "solar:home-smile-bold-duotone",
+      title: "Home Care",
+      description: "Get professional medical care in the comfort and safety of your own home.",
+      highlight: "Comfort",
+      color: "text-green-500",
+      bg: "bg-green-50"
+    },
+    {
+      icon: "solar:clock-circle-bold-duotone",
+      title: "Flexible Shifts",
+      description: "Choose from various shift options ranging from hourly visits to 24-hour care.",
+      highlight: "Flexible",
+      color: "text-blue-500",
+      bg: "bg-blue-50"
+    },
+    {
+      icon: "solar:wheelchair-bold-duotone",
+      title: "Elderly Care",
+      description: "Specialized care for the elderly including mobility assistance and medication management.",
+      highlight: "Specialized",
+      color: "text-orange-500",
+      bg: "bg-orange-50"
+    },
+    {
+      icon: "solar:heart-pulse-bold-duotone",
+      title: "Post-Op Care",
+      description: "Professional post-operative care to ensure smooth and quicker recovery.",
+      highlight: "Recovery",
+      color: "text-red-500",
+      bg: "bg-red-50"
+    },
+    {
+      icon: "solar:baby-bold-duotone",
+      title: "Baby Care",
+      description: "Experienced nurses for newborn care and mother assistance.",
+      highlight: "Baby Care",
+      color: "text-pink-500",
+      bg: "bg-pink-50"
+    },
+    {
+      icon: "solar:calendar-add-bold-duotone",
+      title: "Easy Booking",
+      description: "Simple and quick booking process through our app or website.",
+      highlight: "Easy Book",
+      color: "text-purple-500",
+      bg: "bg-purple-50"
+    },
+    {
+      icon: "solar:users-group-rounded-bold-duotone",
+      title: "Patient Support",
+      description: "Dedicated support team available 24/7 to assist with any queries.",
+      highlight: "Support",
+      color: "text-teal-500",
+      bg: "bg-teal-50"
+    },
+  ];
+
+  return (
+    <div className="w-full">
+      <div className="text-center md:text-left mb-12">
+        <h2 className="text-3xl font-bold text-slate-800 sm:text-4xl mb-4">
+          Why Choose Our Nursing Service?
+        </h2>
+        <p className="text-lg text-slate-500 max-w-3xl">
+          Professional, compassionate, and reliable care for your loved ones.
+        </p>
       </div>
-    );
-  };
-  
-  export default NurseFaqLayout;
-  
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {nurseBenefits.map((item, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-indigo-100 transition-all duration-300 group"
+          >
+            <div className={`w-14 h-14 rounded-2xl ${item.bg} ${item.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+              <Icon icon={item.icon} className="text-3xl" />
+            </div>
+
+            <h3 className="text-lg font-bold text-slate-800 mb-3 group-hover:text-indigo-600 transition-colors">
+              {item.title}
+            </h3>
+            <p className="text-slate-500 text-sm leading-relaxed mb-4 min-h-[60px]">
+              {item.description}
+            </p>
+
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${item.bg} ${item.color}`}>
+              <Icon icon="solar:check-circle-bold" className="text-xs" />
+              {item.highlight}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default NurseFaqLayout;

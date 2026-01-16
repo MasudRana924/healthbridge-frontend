@@ -1,12 +1,12 @@
-import Navbar from '../../components/common/Navbar';
-import Footer from '../../components/common/Footer';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTotals, removeFromCart } from '../../features/medicine/cartSlice';
 import { Link } from 'react-router-dom';
-import { RxCross1 } from "react-icons/rx";
-import { Button } from '@mui/material';
-import cartImg from '../../assets/bag.png'
+import { Icon } from '@iconify/react';
+import { getTotals, removeFromCart } from '../../features/medicine/cartSlice';
+import Navbar from '../../components/common/Navbar';
+import Footer from '../../components/common/Footer';
+import cartImg from '../../assets/bag.png';
+
 const Cart = () => {
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
@@ -14,91 +14,127 @@ const Cart = () => {
     useEffect(() => {
         dispatch(getTotals());
     }, [cart, dispatch]);
+
     const handleRemove = (product) => {
         dispatch(removeFromCart(product));
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-slate-50">
             <Navbar />
 
-            <div className="flex-grow mt-20 lg:mt-48 lg:w-2/4 mx-auto border rounded-lg p-4 mb-12">
-                <h1 className="text-lg font-medium text-gray-900">Shopping cart</h1>
-                {cart.cartItems?.length > 0 ? (
-                    <div>
-                        <div>
-                            {cart.cartItems &&
-                                cart.cartItems.map((cartItem) => (
-                                    <div key={cartItem.id || cartItem.name} className="w-full pl-3 pr-3 lg:w-full 2xl:w-3/4 mx-auto border-b mt-4">
-                                        <div className="w-full lg:w-full mx-auto flex justify-between mb-10">
-                                            <div className="w-2/4">
-                                                <img src={cartItem.image.url} alt={cartItem.name} className="h-32 w-44" />
+            <main className="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto">
+                    <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+                        <Icon icon="solar:cart-large-bold" className="text-primary-500" />
+                        Shopping Cart
+                    </h1>
+
+                    {cart.cartItems?.length > 0 ? (
+                        <div className="lg:grid lg:grid-cols-12 lg:gap-12">
+                            {/* Cart Items */}
+                            <div className="lg:col-span-8">
+                                <div className="space-y-4">
+                                    {cart.cartItems.map((cartItem) => (
+                                        <div
+                                            key={cartItem.id || cartItem.name}
+                                            className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col sm:flex-row items-center gap-6"
+                                        >
+                                            {/* Product Image */}
+                                            <div className="w-full sm:w-32 h-32 bg-slate-50 rounded-xl flex items-center justify-center p-4">
+                                                <img
+                                                    src={cartItem.image.url}
+                                                    alt={cartItem.name}
+                                                    className="w-full h-full object-contain"
+                                                />
                                             </div>
-                                            <div className="w-full">
-                                                <div className="flex justify-between mt-5">
-                                                    <h3 className="text-start text-base font-medium text-gray-900">{cartItem.name}</h3>
-                                                    <button onClick={() => handleRemove(cartItem)}>
-                                                        <RxCross1 className="text-gray-500 text-xl mt-1 mr-2 lg:mr-5" />
+
+                                            {/* Product Details */}
+                                            <div className="flex-1 w-full text-center sm:text-left">
+                                                <div className="flex justify-between items-start">
+                                                    <div>
+                                                        <h3 className="text-lg font-bold text-slate-800 mb-1">{cartItem.name}</h3>
+                                                        <p className="text-slate-500 text-sm">Unit Price: <span className="font-semibold text-slate-700">৳{cartItem.price}</span></p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => handleRemove(cartItem)}
+                                                        className="text-slate-400 hover:text-red-500 transition-colors bg-slate-50 p-2 rounded-full hover:bg-red-50"
+                                                    >
+                                                        <Icon icon="solar:trash-bin-trash-bold" className="text-xl" />
                                                     </button>
                                                 </div>
-                                                <div className="flex flex-1 items-end justify-between text-sm mt-4">
-                                                    <p className="text-gray-500">Qty {cartItem.cartQuantity}</p>
 
-                                                    <div className="flex">
-                                                        <p className="mr-4">{cartItem.price * cartItem.cartQuantity}.00 tk</p>
+                                                <div className="mt-4 flex items-center justify-between">
+                                                    <div className="inline-flex items-center bg-slate-100 rounded-lg p-1">
+                                                        <span className="px-3 py-1 text-sm font-bold text-slate-600">Qty: {cartItem.cartQuantity}</span>
                                                     </div>
+                                                    <p className="text-xl font-bold text-primary-600">
+                                                        ৳{cartItem.price * cartItem.cartQuantity}.00
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
+                            </div>
 
-                            <div className="w-full lg:w-full bg-gray-50 2xl:w-3/4 mx-auto flex justify-between mt-8 ">
-                                <div className="p-8 w-full">
-                                    <div className="flex justify-between text-base font-medium text-gray-900 border-b">
-                                        <p>Shipping Charge </p>
-                                        <p>60.00 TK</p>
+                            {/* Order Summary */}
+                            <div className="lg:col-span-4 mt-8 lg:mt-0">
+                                <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sticky top-24">
+                                    <h2 className="text-lg font-bold text-slate-800 mb-6">Order Summary</h2>
+
+                                    <div className="space-y-4 mb-6">
+                                        <div className="flex justify-between text-slate-600">
+                                            <span>Subtotal</span>
+                                            <span className="font-semibold text-slate-800">৳{cart.cartTotalAmount}</span>
+                                        </div>
+                                        <div className="flex justify-between text-slate-600">
+                                            <span>Shipping Charge</span>
+                                            <span className="font-semibold text-slate-800">৳60.00</span>
+                                        </div>
+                                        <div className="border-t border-slate-100 pt-4 flex justify-between text-lg font-bold text-slate-900">
+                                            <span>Total</span>
+                                            <span className="text-primary-600">৳{cart.cartTotalAmount + 60}</span>
+                                        </div>
                                     </div>
-                                    <div className="mt-4 flex justify-between text-base font-medium text-gray-900 border-b mb-10">
-                                        <p>Subtotal</p>
-                                        <p>{cart.cartTotalAmount + 60} TK</p>
-                                    </div>
-                                    <Link to="/shipping" className="mt-10">
-                                        <button className="flex items-center justify-center rounded-md border border-transparent bg-violet-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-violet-700 w-full">
-                                            Check out
+
+                                    <Link to="/shipping" className="block">
+                                        <button className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-primary-500/30 transition-all transform active:scale-95 flex items-center justify-center gap-2">
+                                            <span>Proceed to Checkout</span>
+                                            <Icon icon="solar:arrow-right-bold" className="text-xl" />
                                         </button>
                                     </Link>
-                                    <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                                        <Link to="/medicine/store"><p>
-                                            or{' '}
-                                            <button
-                                                type="button"
 
-                                                className="font-medium text-violet-600 hover:text-violet-500"
-                                            >
-                                                Continue Shopping
-                                                <span aria-hidden="true"> &rarr;</span>
-                                            </button>
-                                        </p></Link>
+                                    <div className="mt-6 text-center">
+                                        <Link
+                                            to="/medicine/store"
+                                            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-primary-600 transition-colors"
+                                        >
+                                            <Icon icon="solar:arrow-left-bold" />
+                                            Continue Shopping
+                                        </Link>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-                    </div>
-                ) : (
-                    <div className="w-full mb-20 text-center">
-                        <img src={cartImg} alt="" className="w-3/4 lg:w-1/4 mx-auto h-48" />
-                        <p className="mt-10 text-violet-500 font-bold mb-10">Your Cart is Currently Empty</p>
-                        <Link to="/medicine/store">
-                            <Button color="secondary"
-                                variant="contained" className="mt-10">
-                                Continue Shopping
-                            </Button>
-                        </Link>
-                    </div>
-                )}
-            </div>
+                    ) : (
+                        <div className="flex flex-col items-center justify-center py-20 text-center">
+                            <div className="w-64 h-64 mb-8 opacity-90">
+                                <img src={cartImg} alt="Empty Cart" className="w-full h-full object-contain" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-slate-800 mb-2">Your Cart is Empty</h2>
+                            <p className="text-slate-500 mb-8 max-w-md">
+                                Looks like you haven't added any medicines to your cart yet.
+                            </p>
+                            <Link to="/medicine/store">
+                                <button className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-primary-500/30 transition-all transform hover:-translate-y-1">
+                                    Start Shopping
+                                </button>
+                            </Link>
+                        </div>
+                    )}
+                </div>
+            </main>
 
             <Footer />
         </div>

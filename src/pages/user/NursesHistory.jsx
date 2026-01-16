@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FaRegMoneyBillAlt } from 'react-icons/fa';
-import { Alert, AlertTitle } from '@mui/material';
 import { fetchHireNurses } from '../../features/user/hirenurse/myHireNurseSlice';
-
+import { Icon } from '@iconify/react';
 
 const NursesHistory = () => {
     const { loggeduser } = useSelector((state) => state.userDetails);
@@ -19,48 +17,37 @@ const NursesHistory = () => {
     let content;
 
     if (isLoading) {
-        // content = <Loading />;
-        content = <div>
-            <p>Loading </p>
-        </div>;
-    }
-
-    if (!isLoading && isError) {
-        content = <div className="col-span-12">{error}</div>;
-    }
-
-    if (!isLoading && !isError && hireNurse?.length === 0) {
+        content = <div className="col-span-12 text-center p-8"><Icon icon="svg-spinners:ring-resize" className="text-3xl text-primary-500 inline-block" /></div>;
+    } else if (isError) {
+        content = <div className="col-span-12 bg-red-50 text-red-600 p-4 rounded-xl">{error}</div>;
+    } else if (hireNurse?.length === 0) {
         content = (
-            <div className="col-span-12">
-                <div className="mt-5 h-12 lg:w-2/4">
-                    <Alert severity="error">
-                        <AlertTitle className="text-start">Error</AlertTitle>
-                        No Nurses found — <Link to="/nurses"><strong>take consultations!</strong></Link>
-                    </Alert>
+            <div className="col-span-12 text-center py-12">
+                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                    <Icon icon="solar:user-cross-bold" className="text-3xl" />
                 </div>
+                <h3 className="text-slate-800 font-bold mb-2">No Hired Nurses</h3>
+                <Link to="/nurses" className="text-primary-600 font-bold hover:underline">Find a Nurse Now</Link>
             </div>
         );
-    }
-
-    if (!isLoading && !isError && hireNurse?.length > 0) {
+    } else {
         content = hireNurse.map((hire) => (
-            <div key={hire._id} className="card col-span-12 sm:col-span-6 md:col-span-3 lg:col-span-3 2xl:col-span-4">
-                <div className="card-body border">
-                    <div className="relative">
-                        <Link to={`/nurse/${hire.nurseId}`}>
-                            <img src={hire.nurseimage} className="w-full max-h-48" alt={hire.nursename} />
-                        </Link>
-                    </div>
-                    <div className="text-start p-5">
-                        <Link to={`/nurse/${hire.nurseId}`}>
-                            <p className="text-slate-600 text-md font-semibold">
-                                Nurse: {hire.nursename}
+            <div key={hire._id} className="col-span-12 md:col-span-6 lg:col-span-4">
+                <div className="bg-white rounded-2xl border border-slate-100 p-4 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1">
+                    <div className="flex gap-4">
+                        <div className="w-20 h-20 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0">
+                            <img src={hire.nurseimage || 'https://placehold.co/100'} className="w-full h-full object-cover" alt={hire.nursename} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <h4 className="font-bold text-slate-800 truncate">{hire.nursename}</h4>
+                            <p className="text-primary-600 text-sm font-semibold flex items-center gap-1 mt-1">
+                                <Icon icon="solar:bill-bold" />
+                                {hire.nursefees} Tk
                             </p>
-                        </Link>
-                        <p className="text-slate-600 text-md font-semibold flex gap-2">
-                            <FaRegMoneyBillAlt className="text-2xl" /> {hire.nursefees} Tk
-                        </p>
-                        <p className="text-slate-600 text-md font-semibold">Appointment: {hire.date}</p>
+                            <div className="text-xs text-slate-500 mt-2 bg-slate-50 inline-block px-2 py-1 rounded">
+                                {new Date(hire.date).toLocaleDateString()}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,9 +55,12 @@ const NursesHistory = () => {
     }
 
     return (
-        <div className="w-full m-5 lg:full lg:ml-12">
-            <h2 className="text-start lg:text-2xl">My Hired Nurse</h2>
-            <div className="w-full grid grid-cols-12 mt-5 lg:mt-10">
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
+            <h2 className="text-xl font-bold text-slate-800 mb-8 flex items-center gap-2">
+                <Icon icon="solar:user-hands-bold" className="text-primary-500" />
+                Hired Nurses History
+            </h2>
+            <div className="grid grid-cols-12 gap-4">
                 {content}
             </div>
         </div>
